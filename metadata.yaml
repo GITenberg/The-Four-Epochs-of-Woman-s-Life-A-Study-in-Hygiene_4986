@@ -1,0 +1,22 @@
+_repo: The-Four-Epochs-of-Woman-s-Life-A-Study-in-Hygiene_4986
+creator:
+  author:
+    agent_name: Galbraith, Anna M. (Anna Mary)
+    alias: Galbraith, Anna Mary
+    birthdate: 1859
+    gutenberg_agent_id: '1620'
+    url: http://www.gutenberg.org/2009/agents/1620
+description: ''
+gutenberg_issued: '2004-01-01'
+gutenberg_type: Text
+identifiers:
+  gutenberg: '4986'
+language: en
+publisher: Project Gutenberg
+rights: Public domain in the USA.
+rights_url: http://creativecommons.org/about/pdm
+subjects:
+- !lcsh 'Women -- Health and hygiene'
+- !lcc 'RG'
+title: The Four Epochs of Woman's Life; A Study in Hygiene
+url: http://www.gutenberg.org/ebooks/4986
