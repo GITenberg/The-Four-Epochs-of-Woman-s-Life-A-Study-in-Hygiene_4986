@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: lZYs6gV2Ouv2iqF3j1Ki/3o7oe39iavnc6SslL1boGCbBzBb2+KffZVDuGR9Bgwt+2TREuIKdfFtfArhi2bA4Lpf2juVXH8Q4Ml4/F69nhh4yYXmJZytyH854xrpLhbnLiTHaGG+oLal/kx5DYjgCtNeZ+gP4ysyuNJ6gB3CTAv+vi1tvDHmBSMkv9iqIEAWFHpE6Owzkuj3lpZDBBOR9rbNPYav7QP9N/rtdjmkPpgOk3gAsrQQqXBO56xY5/GafbuDa50kpKIllGaAcpBR9bQC6kJ1PoGSzLkh5D2U0tPbEvgvelQUONrS020i2ETHGxVrbD8+t6WEizHAteUZPQ84AZlo8eIjuQj1fPt632vbE/iJwbCLd3s87tqyfoU2aDpDZFDvK42XIlvcgyYVgFXHTHbTB6JpqdXNmhS64dvQKNuJjfvCrxaTAe93DWd8v89C8XCysPE6AUazbw6yvWenr+cS3c7zOl79uAdlvCti/00NlJ4Q9sNgY422NyVq15ek/OfV0PfrqkBRe2ROiN+7luBwxQOLwqyS9nJUFAjpbxyTotzONRfvSW8WlbSKavSHybgTwgGM47fR/K8QNZ0swwT+yVjhJh+c75Tzd4DyKyMdBVVa4v3O5KdNmnluo9zs2mrpgLrITFOV6co1/78+iTM6jJib9e6NUaWkkiM=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/The-Four-Epochs-of-Woman-s-Life-A-Study-in-Hygiene_4986
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
